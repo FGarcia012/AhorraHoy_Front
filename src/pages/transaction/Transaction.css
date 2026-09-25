@@ -9,3 +9,13 @@
 .goal-transaction-type { display: inline-flex; padding: .3rem .55rem; background: #e8f0e8; color: #23745f; font-size: .75rem; font-weight: 800; }
 .goal-transaction-withdraw { background: #f8e1dc; color: #a64f36; }
 .goal-transaction-amount { font-weight: 800; }
+.goal-transactions-table a { color: #23745f; font-weight: 800; }
+.transaction-detail { max-width: 680px; margin: 2rem auto 0; padding: 2rem; border: 1px solid #d8e1d7; background: #fffaf2; }
+.transaction-detail-heading { display: flex; align-items: flex-start; gap: .8rem; color: #23745f; }
+.transaction-detail-heading h2 { margin: .7rem 0 0; color: #173b35; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+.transaction-detail-list { margin: 2rem 0 0; }
+.transaction-detail-list div { display: grid; grid-template-columns: minmax(120px, .45fr) 1fr; gap: 1rem; padding: .9rem 0; border-top: 1px solid #d8e1d7; }
+.transaction-detail-list dt { color: #71837b; font-size: .78rem; font-weight: 800; text-transform: uppercase; }
+.transaction-detail-list dd { margin: 0; color: #28574e; }
+.transaction-detail-list div:first-child dd { font-size: 1.25rem; font-weight: 800; }
+@media (max-width: 600px) { .transaction-detail { padding: 1.25rem; } .transaction-detail-list div { grid-template-columns: 1fr; gap: .35rem; } }

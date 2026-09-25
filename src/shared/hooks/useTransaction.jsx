@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getGoalTransactions, getUserTransactions } from '../../services/transaction.js';
+import { getGoalTransactions, getTransactionById, getUserTransactions } from '../../services/transaction.js';
 
 const getTransactionsFromResponse = (data) => {
   if (Array.isArray(data)) return data;
@@ -42,4 +42,36 @@ export const useTransaction = (id, scope = 'goal') => {
   }, [loadTransactions]);
 
   return { transactions, isLoading, error, loadTransactions };
+};
+
+const getTransactionFromResponse = (data) => data?.transaction || data?.transactionDetails || data?.data || data;
+
+export const useTransactionDetail = (tid) => {
+  const [transaction, setTransaction] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const loadTransaction = useCallback(async () => {
+    if (!tid) return;
+    setIsLoading(true);
+    setError('');
+    try {
+      const response = await getTransactionById(tid);
+      setTransaction(getTransactionFromResponse(response.data));
+    } catch (requestError) {
+      setTransaction(null);
+      setError(getErrorMessage(requestError));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [tid]);
+
+  useEffect(() => {
+    const load = async () => {
+      await loadTransaction();
+    };
+    load();
+  }, [loadTransaction]);
+
+  return { transaction, isLoading, error, loadTransaction };
 };

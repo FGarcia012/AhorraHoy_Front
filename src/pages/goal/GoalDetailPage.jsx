@@ -1,0 +1,23 @@
+import { ArrowLeft, CircleAlert, History, LoaderCircle, Target } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
+import { Navbar } from '../../components/navbar';
+import { Footer } from '../../components/footer/Footer';
+import { useGoalDetail } from '../../shared/hooks/useGoalQueries';
+import { useTransaction } from '../../shared/hooks/useTransaction';
+import { getGoalPictureUrl } from '../../utils/files.js';
+import { GOAL_SAVING_FREQUENCY, GOAL_STATUS, TRANSACTION_TYPE } from '../../utils/enums.js';
+import './GoalPage.css';
+import './GoalCatalog.css';
+import '../transaction/Transaction.css';
+
+const currency = new Intl.NumberFormat('es-GT', { style: 'currency', currency: 'GTQ' });
+const getStatusLabel = (status) => Object.values(GOAL_STATUS).find((item) => item.value === status)?.label || status || 'Sin estado';
+
+export const GoalDetailPage = () => {
+  const { gid } = useParams();
+  const { goal, isLoading, error, loadGoal } = useGoalDetail(gid);
+  const { transactions, isLoading: isTransactionsLoading, error: transactionsError, loadTransactions } = useTransaction(gid);
+  const pictureUrl = getGoalPictureUrl(goal?.goalPicture);
+
+  return <main className='goal-page'><Navbar /><section className='goal-shell'><div className='goal-topbar'><div><span className='goal-eyebrow'>Detalle de meta</span><h1>Una meta, todos sus pasos.</h1></div><Link className='goal-quiet-button' to='/goals'><ArrowLeft size={16} aria-hidden='true' /> Volver a mis metas</Link></div>{isLoading ? <div className='goal-state'><LoaderCircle className='spin' size={32} aria-hidden='true' /><p>Cargando meta...</p></div> : error ? <div className='goal-state'><CircleAlert size={32} aria-hidden='true' /><p>{error}</p><button className='goal-primary-button' type='button' onClick={loadGoal}>Intentar de nuevo</button></div> : goal && <><section className='goal-overview'><div className='goal-detail-picture'>{pictureUrl ? <img src={pictureUrl} alt={`Imagen de ${goal.name}`} /> : <Target size={38} aria-hidden='true' />}</div><div className='goal-overview-content'><span className={`goal-status goal-status-${goal.status?.toLowerCase()}`}>{getStatusLabel(goal.status)}</span><h2>{goal.name}</h2><div className='goal-stats'><div><span>Ahorrado</span><strong>{currency.format(Number(goal.currentAmount) || 0)}</strong></div><div><span>Objetivo</span><strong>{currency.format(Number(goal.targetAmount) || 0)}</strong></div><div><span>Aporte {GOAL_SAVING_FREQUENCY[goal.savingFrequency]?.label?.toLowerCase() || 'planeado'}</span><strong>{currency.format(Number(goal.savingAmount) || 0)}</strong></div></div></div></section><section className='goal-transactions' aria-labelledby='goal-detail-transactions'><div className='goal-section-heading'><div><span className='goal-eyebrow'>Movimientos</span><h2 id='goal-detail-transactions'>Actividad de esta meta.</h2></div><History size={24} aria-hidden='true' /></div>{isTransactionsLoading ? <div className='goal-transactions-state'><LoaderCircle className='spin' size={24} aria-hidden='true' /><span>Cargando movimientos...</span></div> : transactionsError ? <div className='goal-transactions-state goal-transactions-error' role='alert'><span>{transactionsError}</span><button className='goal-secondary-button' type='button' onClick={loadTransactions}>Intentar de nuevo</button></div> : transactions.length === 0 ? <div className='goal-transactions-state'><span>Esta meta todavía no tiene movimientos.</span></div> : <div className='goal-transactions-table-wrap'><table className='goal-transactions-table'><thead><tr><th scope='col'>Tipo</th><th scope='col'>Monto</th><th scope='col'>Fecha</th></tr></thead><tbody>{transactions.map((transaction) => { const transactionId = transaction._id || transaction.tid || transaction.id; const transactionType = TRANSACTION_TYPE[transaction.type]; const transactionDate = transaction.createdAt || transaction.date || transaction.transactionDate; return <tr key={transactionId}><td><Link to={`/transactions/${transactionId}`}><span className={`goal-transaction-type goal-transaction-${transaction.type?.toLowerCase()}`}>{transactionType?.label || 'Movimiento'}</span></Link></td><td className='goal-transaction-amount'>{currency.format(Number(transaction.amount) || 0)}</td><td>{transactionDate ? new Intl.DateTimeFormat('es-GT', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(transactionDate)) : 'Sin fecha'}</td></tr>; })}</tbody></table></div>}</section></>}</section><Footer /></main>;
+};
