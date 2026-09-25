@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { ImagePlus, LoaderCircle, UserRound, X } from 'lucide-react';
+import { ArrowLeft, ImagePlus, LoaderCircle, UserRound, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../shared/hooks/useRegister';
 import { validateEmail, validateEmailMessage, validateName, validateNameMessage, validatePassword, validatePasswordMessage, validateSurname, validateSurnameMessage } from '../shared/validators';
+import './AuthControls.css';
 
 const initialFormState = {
   name: { value: '', isValid: false, showError: false },
@@ -13,6 +15,7 @@ const initialFormState = {
 };
 
 export const Register = ({ switchAuthHandler }) => {
+  const navigate = useNavigate();
   const { registerUser, isLoading } = useRegister();
   const fileInputRef = useRef(null);
   const [formState, setFormState] = useState(initialFormState);
@@ -49,7 +52,7 @@ export const Register = ({ switchAuthHandler }) => {
       <section className='auth-panel'>
         <div className='auth-intro'><span className='eyebrow'>Empieza hoy</span><h1>Haz espacio para tus metas.</h1><p>Registra tu cuenta y comienza a darle una dirección concreta a tu ahorro.</p><div className='auth-mark'><UserRound size={20} aria-hidden='true' /></div></div>
         <form className='auth-form' onSubmit={handleRegister} noValidate>
-          <div className='form-heading'><h2>Crear cuenta</h2><p>Completa tus datos para continuar.</p></div>
+          <div className='form-heading'><div><h2>Crear cuenta</h2><p>Completa tus datos para continuar.</p></div><button className='back-home-button' type='button' onClick={() => navigate('/')}><ArrowLeft size={15} aria-hidden='true' /> Regresar al inicio</button></div>
           <div className='form-grid'>
             {['name', 'surname'].map((field) => <label className='field-label' key={field}>{field === 'name' ? 'Nombre' : 'Apellido'}<input type='text' value={formState[field].value} onChange={(event) => updateField(field, event.target.value)} onBlur={() => handleBlur(field)} aria-invalid={formState[field].showError} autoComplete={field === 'name' ? 'given-name' : 'family-name'} />{formState[field].showError && <span className='field-error'>{messages[field]}</span>}</label>)}
           </div>

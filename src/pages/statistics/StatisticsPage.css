@@ -1,0 +1,26 @@
+.statistics-page { min-height: 100vh; background: #f5f7f2; color: #173b35; }
+.statistics-shell { width: min(100%, 1080px); margin: 0 auto; padding: 4rem 2rem 5rem; }
+.statistics-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.statistics-topbar h1 { max-width: 720px; margin: .9rem 0 1rem; font-family: Georgia, serif; font-size: clamp(2.5rem, 5vw, 4.8rem); font-weight: 500; line-height: .98; }
+.statistics-intro { max-width: 600px; color: #71837b; line-height: 1.7; }
+.statistics-section { margin-top: 2.5rem; }
+.statistics-section-heading { margin-bottom: 1rem; }
+.statistics-section-heading h2 { margin: .45rem 0 0; color: #173b35; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+.statistics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.statistics-card { min-height: 118px; padding: 1rem; border-top: 2px solid #ce6d3d; background: #fffaf2; }
+.statistics-card span { display: block; color: #71837b; font-size: .78rem; }
+.statistics-card strong { display: block; margin-top: .55rem; color: #173b35; font-size: 1.25rem; }
+.statistics-card-accent { border-top-color: #23745f; background: #e8f0e8; }
+.statistics-progress { padding: 1.5rem; background: #fffaf2; }
+.statistics-progress-line { height: 10px; margin-top: 1rem; overflow: hidden; background: #dce5dc; }
+.statistics-progress-line span { display: block; height: 100%; background: #23745f; }
+.statistics-progress-caption { display: flex; justify-content: space-between; gap: 1rem; margin-top: .55rem; color: #71837b; font-size: .8rem; }
+.statistics-table-wrap { overflow-x: auto; }
+.statistics-table { width: 100%; min-width: 420px; border-collapse: collapse; background: #fffaf2; }
+.statistics-table th, .statistics-table td { padding: .85rem 1rem; border-bottom: 1px solid #d8e1d7; text-align: left; }
+.statistics-table th { color: #71837b; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.statistics-table td { color: #28574e; }
+.statistics-empty, .statistics-error { display: grid; justify-items: center; gap: .7rem; min-height: 240px; padding: 4rem 2rem; color: #71837b; text-align: center; }
+.statistics-error { color: #a64f36; }
+@media (max-width: 900px) { .statistics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .statistics-topbar { flex-direction: column; } .statistics-topbar .goal-quiet-button { margin-top: 0; } .statistics-grid { grid-template-columns: 1fr; } }
