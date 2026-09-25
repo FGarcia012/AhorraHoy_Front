@@ -45,14 +45,7 @@ apiClient.interceptors.response.use(
 );
 
 export const register = async (data) => {
-  try {
-    return await apiClient.post('/auth/register', data);
-  } catch (e) {
-    return {
-        error: true,
-        e
-    }
-  }
+  return apiClient.post('/auth/register', data);
 };
 
 export const login = async (data) => {

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, LogIn, LogOut, Menu, UserRound, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../contexts/UserContext.jsx';
+import { useUser } from '../../contexts/userContext.js';
 import { getProfilePictureUrl } from '../../utils/files.js';
 import './Navbar.css';
 

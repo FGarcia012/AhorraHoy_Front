@@ -6,15 +6,16 @@ import { validateEmail } from '../shared/validators';
 
 export const Login = ({ switchAuthHandler }) => {
   const { loginUser, isLoading } = useLogin();
-  const [emailOrName, setEmailOrName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showError, setShowError] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState({ email: false, password: false });
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (!emailOrName.trim() || !password) { setShowError(true); return; }
-    setShowError(false);
-    await loginUser(validateEmail(emailOrName.trim()) ? { email: emailOrName.trim(), password } : { name: emailOrName.trim(), password });
+    const nextErrors = { email: !validateEmail(email.trim()), password: !password };
+    setFieldErrors(nextErrors);
+    if (nextErrors.email || nextErrors.password) return;
+    await loginUser({ email: email.trim(), password });
   };
 
   return (
@@ -22,9 +23,9 @@ export const Login = ({ switchAuthHandler }) => {
       <section className='auth-panel auth-panel-login'>
         <div className='auth-intro'><span className='eyebrow'>Qué bueno verte</span><h1>Tu próximo paso empieza aquí.</h1><p>Entra a tu espacio y sigue construyendo las metas que importan.</p><div className='auth-mark'><LogIn size={20} aria-hidden='true' /></div></div>
         <form className='auth-form' onSubmit={handleLogin} noValidate>
-          <div className='form-heading'><h2>Iniciar sesión</h2><p>Usa tu correo o nombre.</p></div>
-          <label className='field-label'>Correo o nombre<input type='text' value={emailOrName} onChange={(event) => { setEmailOrName(event.target.value); setShowError(false); }} autoComplete='name' aria-invalid={showError} />{showError && <span className='field-error'>Ingresa tu correo o nombre.</span>}</label>
-          <label className='field-label'>Contraseña<input type='password' value={password} onChange={(event) => { setPassword(event.target.value); setShowError(false); }} autoComplete='current-password' aria-invalid={showError} />{showError && <span className='field-error'>Ingresa tu contraseña.</span>}</label>
+          <div className='form-heading'><h2>Iniciar sesión</h2></div>
+          <label className='field-label'>Correo electrónico<input type='email' value={email} onChange={(event) => { setEmail(event.target.value); setFieldErrors((previous) => ({ ...previous, email: false })); }} autoComplete='email' aria-invalid={fieldErrors.email} />{fieldErrors.email && <span className='field-error'>Ingresa un correo válido.</span>}</label>
+          <label className='field-label'>Contraseña<input type='password' value={password} onChange={(event) => { setPassword(event.target.value); setFieldErrors((previous) => ({ ...previous, password: false })); }} autoComplete='current-password' aria-invalid={fieldErrors.password} />{fieldErrors.password && <span className='field-error'>Ingresa tu contraseña.</span>}</label>
           <button className='submit-button' type='submit' disabled={isLoading}>{isLoading ? <><LoaderCircle className='spin' size={18} aria-hidden='true' /> Iniciando sesión...</> : 'Iniciar sesión'}</button>
           <p className='auth-switch'>¿Todavía no tienes una cuenta? <button type='button' onClick={switchAuthHandler}>Regístrate</button></p>
         </form>

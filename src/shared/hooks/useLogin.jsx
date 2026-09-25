@@ -2,26 +2,18 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/api';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { useUser } from '../../contexts/UserContext.jsx';
+import { useUser } from '../../contexts/userContext.js';
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login: contextLogin } = useUser();
   const navigate = useNavigate();
 
-  const loginUser = async ({ email, name, password }) => {
+  const loginUser = async ({ email, password }) => {
     try {
       setIsLoading(true);
 
-      const loginData = { password };
-      if (email) {
-        loginData.email = email;
-      }
-      if (name) {
-        loginData.name = name;
-      }
-
-      const response = await login(loginData);
+      const response = await login({ email, password });
 
       let userDetails;
       let token;
@@ -52,21 +44,12 @@ export const useLogin = () => {
       navigate('/', { replace: true });
 
     } catch (error) {
-      const errorMessage = error?.response?.data?.error ||
-                          error?.response?.data?.message || 
-              '';
+      const validationErrors = error?.response?.data?.errors;
+      const errorMessage = Array.isArray(validationErrors)
+        ? validationErrors.map(({ msg }) => msg).filter(Boolean).join(' ')
+        : error?.response?.data?.message || error?.response?.data?.error || '';
 
-      if (errorMessage.toLowerCase().includes('credenciales invalidas')) {
-        if (errorMessage.includes('usuario') || errorMessage.includes('correo')) {
-          toast.error('Usuario o correo electrónico incorrecto');
-        } else if (errorMessage.includes('contraseña')) {
-          toast.error('Contraseña incorrecta');
-        } else {
-          toast.error('Credenciales inválidas');
-        }
-      } else {
-        toast.error(errorMessage || 'Error al iniciar sesión');
-      }
+      toast.error(errorMessage || 'Error al iniciar sesión');
     } finally {
       setIsLoading(false);
     }

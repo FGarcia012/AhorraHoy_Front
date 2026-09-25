@@ -29,23 +29,14 @@ export const useRegister = () => {
 
       const response = await register(formData);
 
-      if (response.error) {
-        const errorMessage = response.e?.response?.data?.error || 
-                            response.e?.response?.data?.message ||
-                            'Error al registrar la cuenta';
-        toast.error(errorMessage);
-        return null;
-      } else {
-        toast.success(response.data.message || 'Cuenta registrada exitosamente');
-        
-        navigate('/auth', { replace: true });
-        
-        return response.data;
-      }
+      toast.success(response.data.message || 'Cuenta registrada exitosamente');
+      navigate('/auth', { replace: true });
+      return response.data;
     } catch (error) {
-      const errorMessage = error?.response?.data?.error || 
-                          error?.response?.data?.message ||
-                          'Error al registrar la cuenta';
+      const validationErrors = error?.response?.data?.errors;
+      const errorMessage = Array.isArray(validationErrors)
+        ? validationErrors.map(({ msg }) => msg).filter(Boolean).join(' ')
+        : error?.response?.data?.message || error?.response?.data?.error || 'Error al registrar la cuenta';
       toast.error(errorMessage);
       return null;
     } finally {

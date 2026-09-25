@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-
-const UserContext = createContext(null);
+import { UserContext } from './userContext.js';
 
 const formatUser = (userData) => ({
   uid: userData?.uid || userData?._id || userData?.user?.uid || userData?.user?._id,
   name: userData?.name || userData?.user?.name || 'Usuario',
+  surname: userData?.surname || userData?.user?.surname,
   email: userData?.email || userData?.user?.email,
   profilePicture: userData?.profilePicture || userData?.user?.profilePicture,
   token: userData?.token,
@@ -20,14 +20,6 @@ const readStoredUser = () => {
     console.error('Error al leer los datos del usuario:', error);
     return null;
   }
-};
-
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser debe utilizarse dentro de UserProvider');
-  }
-  return context;
 };
 
 export const UserProvider = ({ children }) => {
