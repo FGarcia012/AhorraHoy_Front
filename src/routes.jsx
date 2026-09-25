@@ -7,6 +7,7 @@ import { GoalDetailPage } from './pages/goal/GoalDetailPage.jsx';
 import { PrivateRoute } from './components/PrivateRoute.jsx';
 import { TransactionPage } from './pages/transaction/TransactionPage.jsx';
 import { TransactionDetailPage } from './pages/transaction/TransactionDetailPage.jsx';
+import { FinancialPage } from './pages/financial/FinancialPage.jsx';
 
 export const routes = [
     { path: '/*', element: <HomePage /> },
@@ -17,4 +18,5 @@ export const routes = [
     { path: '/goals/:gid', element: <PrivateRoute><GoalDetailPage /></PrivateRoute> },
     { path: '/transactions', element: <PrivateRoute><TransactionPage /></PrivateRoute> },
     { path: '/transactions/:tid', element: <PrivateRoute><TransactionDetailPage /></PrivateRoute> },
+    { path: '/financial', element: <PrivateRoute><FinancialPage /></PrivateRoute> },
 ];

@@ -1,0 +1,21 @@
+.financial-page { min-height: 100vh; background: #f5f7f2; color: #173b35; }
+.financial-shell { width: min(100%, 900px); margin: 0 auto; padding: 4rem 2rem 5rem; }
+.financial-topbar { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.financial-topbar h1 { max-width: 650px; margin: .9rem 0 1rem; font-family: Georgia, serif; font-size: clamp(2.5rem, 5vw, 4.8rem); font-weight: 500; line-height: .98; }
+.financial-intro { max-width: 560px; color: #71837b; line-height: 1.7; }
+.financial-form { max-width: 680px; margin-top: 2.5rem; padding: 2rem; border: 1px solid #d8e1d7; background: #fffaf2; box-shadow: 0 20px 50px rgb(39 73 62 / 9%); }
+.financial-form-heading { display: flex; align-items: flex-start; gap: .8rem; margin-bottom: 1.6rem; color: #23745f; }
+.financial-form-heading h2 { margin: 0; color: #173b35; font-family: Georgia, serif; font-size: 1.6rem; font-weight: 500; }
+.financial-form-heading p { margin: .35rem 0 0; color: #71837b; font-size: .84rem; line-height: 1.5; }
+.financial-toggle { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.4rem; color: #28574e; font-weight: 800; }
+.financial-toggle input { width: 1.15rem; height: 1.15rem; accent-color: #23745f; }
+.financial-field { display: flex; flex-direction: column; gap: .45rem; margin-bottom: 1rem; color: #28574e; font-size: .84rem; font-weight: 700; }
+.financial-field input { width: 100%; min-height: 44px; padding: .65rem .75rem; border: 1px solid #cbd8cc; background: #fff; color: #173b35; }
+.financial-field input[aria-invalid='true'] { border-color: #b75c43; }
+.financial-field-error { color: #a64f36; font-size: .73rem; font-weight: 500; }
+.financial-summary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 2rem; }
+.financial-summary div { padding: 1rem; border-top: 2px solid #ce6d3d; background: #fff5e9; }
+.financial-summary span { display: block; color: #71837b; font-size: .75rem; }
+.financial-summary strong { display: block; margin-top: .35rem; color: #173b35; font-size: 1.2rem; }
+.financial-alert { margin-top: 1.5rem; padding: .9rem 1rem; background: #f8e1dc; color: #a64f36; }
+@media (max-width: 700px) { .financial-topbar { flex-direction: column; } .financial-topbar .goal-quiet-button { margin-top: 0; } .financial-form { padding: 1.25rem; } .financial-summary { grid-template-columns: 1fr; } }
