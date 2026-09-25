@@ -1,0 +1,11 @@
+.goal-transactions { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #d8e1d7; }
+.goal-transactions-state { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 120px; color: #71837b; text-align: center; }
+.goal-transactions-error { flex-wrap: wrap; color: #a64f36; }
+.goal-transactions-table-wrap { overflow-x: auto; margin-top: 1rem; }
+.goal-transactions-table { width: 100%; min-width: 520px; border-collapse: collapse; background: #fffaf2; }
+.goal-transactions-table th, .goal-transactions-table td { padding: .9rem 1rem; border-bottom: 1px solid #d8e1d7; text-align: left; }
+.goal-transactions-table th { color: #71837b; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.goal-transactions-table td { color: #28574e; font-size: .88rem; }
+.goal-transaction-type { display: inline-flex; padding: .3rem .55rem; background: #e8f0e8; color: #23745f; font-size: .75rem; font-weight: 800; }
+.goal-transaction-withdraw { background: #f8e1dc; color: #a64f36; }
+.goal-transaction-amount { font-weight: 800; }

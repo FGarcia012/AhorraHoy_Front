@@ -10,3 +10,8 @@ export const GOAL_STATUS = {
   COMPLETED: { value: 'COMPLETED', label: 'Completada' },
   CANCELLED: { value: 'CANCELLED', label: 'Cancelada' },
 };
+
+export const TRANSACTION_TYPE = {
+  DEPOSIT: { value: 'DEPOSIT', label: 'Depósito' },
+  WITHDRAW: { value: 'WITHDRAW', label: 'Retiro' },
+};
