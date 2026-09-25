@@ -9,6 +9,11 @@
 .goal-transaction-type { display: inline-flex; padding: .3rem .55rem; background: #e8f0e8; color: #23745f; font-size: .75rem; font-weight: 800; }
 .goal-transaction-withdraw { background: #f8e1dc; color: #a64f36; }
 .goal-transaction-amount { font-weight: 800; }
+.transaction-filters { display: flex; align-items: end; gap: 1rem; margin-top: 2rem; }
+.transaction-filters .goal-search { margin-top: 0; flex: 1; }
+.transaction-date-filter { display: flex; flex-direction: column; gap: .4rem; color: #71837b; font-size: .78rem; font-weight: 800; }
+.transaction-date-filter input { min-height: 44px; padding: .65rem .75rem; border: 1px solid #cbd8cc; background: #fffaf2; color: #173b35; font: inherit; }
+@media (max-width: 600px) { .transaction-filters { align-items: stretch; flex-direction: column; } }
 .goal-transactions-table a { color: #23745f; font-weight: 800; }
 .transaction-detail { max-width: 680px; margin: 2rem auto 0; padding: 2rem; border: 1px solid #d8e1d7; background: #fffaf2; }
 .transaction-detail-heading { display: flex; align-items: flex-start; gap: .8rem; color: #23745f; }

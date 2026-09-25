@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { getGoalHistory } from '../../services/goal.js';
 import { getGoalTransactions, getTransactionById, getUserTransactions } from '../../services/transaction.js';
 
 const getTransactionsFromResponse = (data) => {
@@ -14,6 +15,24 @@ const getErrorMessage = (error) => {
   return error?.response?.data?.message || error?.response?.data?.error || 'No se pudo cargar el historial.';
 };
 
+const getGoalId = (transaction) => typeof transaction?.goal === 'string'
+  ? transaction.goal
+  : transaction?.goal?._id || transaction?.goal?.gid || transaction?.goalId || transaction?.gid;
+
+const getGoalsFromResponse = (data) => {
+  if (Array.isArray(data)) return data;
+  return data?.goals || data?.goalHistory || data?.data || [];
+};
+
+const getGoalNames = async (uid) => {
+  try {
+    const response = await getGoalHistory(uid);
+    return new Map(getGoalsFromResponse(response.data).map((goal) => [goal._id || goal.gid || goal.id, goal.name]));
+  } catch {
+    return new Map();
+  }
+};
+
 export const useTransaction = (id, scope = 'goal') => {
   const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +44,12 @@ export const useTransaction = (id, scope = 'goal') => {
     setError('');
     try {
       const response = scope === 'user' ? await getUserTransactions(id) : await getGoalTransactions(id);
-      setTransactions(getTransactionsFromResponse(response.data));
+      const nextTransactions = getTransactionsFromResponse(response.data);
+      const goalNames = scope === 'user' ? await getGoalNames(id) : new Map();
+      setTransactions(nextTransactions.map((transaction) => {
+        const goalName = transaction.goal?.name || transaction.goalName || transaction.goal?.goalName || goalNames.get(getGoalId(transaction));
+        return goalName ? { ...transaction, goalName } : transaction;
+      }));
     } catch (requestError) {
       setTransactions([]);
       setError(getErrorMessage(requestError));
