@@ -41,7 +41,7 @@ export const useLogin = () => {
 
       contextLogin({ ...userDetails, token });
 
-      navigate('/', { replace: true });
+      navigate('/goal', { replace: true });
 
     } catch (error) {
       const validationErrors = error?.response?.data?.errors;

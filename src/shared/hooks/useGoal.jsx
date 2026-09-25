@@ -35,7 +35,8 @@ export const useGoal = () => {
     setError('');
     try {
       const response = await getActiveGoal(user.uid);
-      setGoal(getGoalFromResponse(response.data));
+        const nextGoal = getGoalFromResponse(response.data);
+        setGoal(response.data?.estimatedTime ? { ...nextGoal, estimatedTime: response.data.estimatedTime } : nextGoal);
     } catch (requestError) {
       if (requestError.response?.status === 404) {
         setGoal(null);
