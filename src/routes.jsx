@@ -8,6 +8,8 @@ import { PrivateRoute } from './components/PrivateRoute.jsx';
 import { TransactionPage } from './pages/transaction/TransactionPage.jsx';
 import { TransactionDetailPage } from './pages/transaction/TransactionDetailPage.jsx';
 import { FinancialPage } from './pages/financial/FinancialPage.jsx';
+import { IncomePage } from './pages/income/IncomePage.jsx';
+import { IncomeDetailPage } from './pages/income/IncomeDetailPage.jsx';
 
 export const routes = [
     { path: '/*', element: <HomePage /> },
@@ -19,4 +21,6 @@ export const routes = [
     { path: '/transactions', element: <PrivateRoute><TransactionPage /></PrivateRoute> },
     { path: '/transactions/:tid', element: <PrivateRoute><TransactionDetailPage /></PrivateRoute> },
     { path: '/financial', element: <PrivateRoute><FinancialPage /></PrivateRoute> },
+    { path: '/income', element: <PrivateRoute><IncomePage /></PrivateRoute> },
+    { path: '/income/:iid', element: <PrivateRoute><IncomeDetailPage /></PrivateRoute> },
 ];
