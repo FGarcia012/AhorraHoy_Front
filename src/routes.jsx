@@ -10,6 +10,7 @@ import { TransactionDetailPage } from './pages/transaction/TransactionDetailPage
 import { FinancialPage } from './pages/financial/FinancialPage.jsx';
 import { IncomePage } from './pages/income/IncomePage.jsx';
 import { IncomeDetailPage } from './pages/income/IncomeDetailPage.jsx';
+import { ProfilePage } from './pages/profile/ProfilePage.jsx';
 
 export const routes = [
     { path: '/*', element: <HomePage /> },
@@ -23,4 +24,5 @@ export const routes = [
     { path: '/financial', element: <PrivateRoute><FinancialPage /></PrivateRoute> },
     { path: '/income', element: <PrivateRoute><IncomePage /></PrivateRoute> },
     { path: '/income/:iid', element: <PrivateRoute><IncomeDetailPage /></PrivateRoute> },
+    { path: '/profile', element: <PrivateRoute><ProfilePage /></PrivateRoute> },
 ];
