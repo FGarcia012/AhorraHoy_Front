@@ -10,3 +10,4 @@ export const createIncome = (uid, data) => apiClient.post(`/income/createIncome/
 export const getIncomeById = (iid) => apiClient.get(`/income/getIncomeById/${iid}`);
 export const getUserIncomes = (uid) => apiClient.get(`/income/getUserIncomes/${uid}`);
 export const updateIncome = (iid, data) => apiClient.put(`/income/updateIncome/${iid}`, toIncomePayload(data));
+export const deleteIncome = (iid) => apiClient.delete(`/income/deleteIncome/${iid}`);

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useUser } from '../../contexts/userContext.js';
-import { createIncome, getIncomeById, getUserIncomes, updateIncome } from '../../services/income.js';
+import { createIncome, deleteIncome, getIncomeById, getUserIncomes, updateIncome } from '../../services/income.js';
 
 const getErrorMessage = (error, fallback) => {
   const validationErrors = error?.response?.data?.errors;
@@ -63,7 +63,25 @@ export const useIncome = () => {
     }
   };
 
-  return { incomes, isLoading, isMutating, error, loadIncomes, create };
+  const remove = async (iid) => {
+    setIsMutating(true);
+    setError('');
+    try {
+      const response = await deleteIncome(iid);
+      await loadIncomes();
+      toast.success(response.data?.message || 'Ingreso eliminado correctamente.');
+      return true;
+    } catch (requestError) {
+      const message = getErrorMessage(requestError, 'No se pudo eliminar el ingreso.');
+      setError(message);
+      toast.error(message);
+      return false;
+    } finally {
+      setIsMutating(false);
+    }
+  };
+
+  return { incomes, isLoading, isMutating, error, loadIncomes, create, remove };
 };
 
 export const useIncomeDetail = (iid) => {
@@ -112,5 +130,22 @@ export const useIncomeDetail = (iid) => {
     }
   };
 
-  return { income, isLoading, isMutating, error, loadIncome, update };
+  const remove = async () => {
+    setIsMutating(true);
+    setError('');
+    try {
+      const response = await deleteIncome(iid);
+      toast.success(response.data?.message || 'Ingreso eliminado correctamente.');
+      return true;
+    } catch (requestError) {
+      const message = getErrorMessage(requestError, 'No se pudo eliminar el ingreso.');
+      setError(message);
+      toast.error(message);
+      return false;
+    } finally {
+      setIsMutating(false);
+    }
+  };
+
+  return { income, isLoading, isMutating, error, loadIncome, update, remove };
 };

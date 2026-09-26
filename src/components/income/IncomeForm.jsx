@@ -1,11 +1,11 @@
 import { LoaderCircle, Save } from 'lucide-react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { INCOME_FREQUENCY, INCOME_TYPE } from '../../utils/enums.js';
+import { INCOME_TYPE, RECURRENCE_FREQUENCY } from '../../utils/enums.js';
 import { validateIncomeForm } from '../../shared/validators/validateIncomeForm';
 
 const incomeTypes = Object.values(INCOME_TYPE);
-const frequencies = Object.values(INCOME_FREQUENCY);
+const frequencies = Object.values(RECURRENCE_FREQUENCY);
 
 const FieldError = ({ message }) => (message ? <span className='income-field-error'>{message}</span> : null);
 

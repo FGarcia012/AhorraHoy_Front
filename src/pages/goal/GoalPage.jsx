@@ -3,6 +3,7 @@ import { ArrowDownToLine, ArrowUpFromLine, Camera, Check, CircleAlert, Clock3, H
 import { useNavigate } from 'react-router-dom';
 import { Navbar } from '../../components/navbar';
 import { Footer } from '../../components/footer/Footer';
+import { showConfirmToast } from '../../components/ConfirmToast.jsx';
 import { useGoal } from '../../shared/hooks/useGoal';
 import { useTransaction } from '../../shared/hooks/useTransaction';
 import { validateGoalForm } from '../../shared/validators/validateGoalForm';
@@ -76,12 +77,7 @@ export const GoalPage = () => {
       setAmountError('No puedes retirar más de lo que has ahorrado.');
       return;
     }
-    if (!window.confirm('¿Seguro que quieres sacar dinero de tu meta? ¡Todo ahorro cuenta! :(')) return;
-    const succeeded = await withdraw(amount);
-    if (succeeded) {
-      setAmount('');
-      await loadTransactions();
-    }
+    showConfirmToast({ title: 'Retirar dinero', message: '¿Quieres retirar este monto de tu meta?', confirmLabel: 'Retirar dinero', onConfirm: async () => { const succeeded = await withdraw(amount); if (succeeded) { setAmount(''); await loadTransactions(); } } });
   };
 
   const startEditing = () => {
@@ -114,11 +110,7 @@ export const GoalPage = () => {
     event.target.value = '';
   };
 
-  const handleCancel = async () => {
-    if (window.confirm('¿Seguro que quieres cancelar esta meta? Esta acción no se puede deshacer.')) {
-      await cancel();
-    }
-  };
+  const handleCancel = () => showConfirmToast({ title: 'Cancelar meta', message: 'Esta acción no se puede deshacer. ¿Quieres cancelar esta meta?', confirmLabel: 'Cancelar meta', onConfirm: cancel });
 
   if (isLoading) {
     return <main className='goal-page'><Navbar /><section className='goal-state'><LoaderCircle className='spin' size={32} aria-hidden='true' /><p>Cargando tu meta...</p></section><Footer /></main>;

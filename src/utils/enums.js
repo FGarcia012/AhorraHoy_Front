@@ -24,11 +24,23 @@ export const INCOME_TYPE = {
   OTHER: { value: 'OTHER', label: 'Otro' },
 };
 
-export const INCOME_FREQUENCY = {
+export const RECURRENCE_FREQUENCY = {
   WEEKLY: { value: 'WEEKLY', label: 'Semanal' },
   MONTHLY: { value: 'MONTHLY', label: 'Mensual' },
   BIMONTHLY: { value: 'BIMONTHLY', label: 'Bimensual' },
   SEMESTERLY: { value: 'SEMESTERLY', label: 'Semestral' },
   YEARLY: { value: 'YEARLY', label: 'Anual' },
   IRREGULAR: { value: 'IRREGULAR', label: 'Irregular' },
+};
+
+export const EXPENSE_CATEGORY = {
+  HOUSING: { value: 'HOUSING', label: 'Vivienda' },
+  FOOD: { value: 'FOOD', label: 'Alimentación' },
+  TRANSPORT: { value: 'TRANSPORT', label: 'Transporte' },
+  UTILITIES: { value: 'UTILITIES', label: 'Servicios (luz, agua, internet)' },
+  HEALTH: { value: 'HEALTH', label: 'Salud' },
+  EDUCATION: { value: 'EDUCATION', label: 'Educación' },
+  ENTERTAINMENT: { value: 'ENTERTAINMENT', label: 'Entretenimiento' },
+  DEBT: { value: 'DEBT', label: 'Deudas' },
+  OTHER: { value: 'OTHER', label: 'Otro' },
 };

@@ -26,5 +26,5 @@
 .income-field input[aria-invalid='true'], .income-field textarea[aria-invalid='true'] { border-color: #b75c43; }
 .income-field-error { color: #a64f36; font-size: .73rem; font-weight: 500; }
 .income-empty { padding: 2rem 0; color: #71837b; text-align: center; }
-.income-alert { margin-top: 1.5rem; padding: .9rem 1rem; background: #f8e1dc; color: #a64f36; }
+.income-alert { display: flex; align-items: center; gap: .65rem; margin-top: 1.5rem; padding: .9rem 1rem; border-left: 4px solid #b75c43; background: #f8e1dc; color: #8f412f; line-height: 1.45; }
 @media (max-width: 800px) { .income-topbar { flex-direction: column; } .income-layout { grid-template-columns: 1fr; } .income-topbar .goal-quiet-button { margin-top: 0; } }

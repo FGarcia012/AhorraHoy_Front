@@ -3,7 +3,11 @@ import toast from 'react-hot-toast';
 import { useUser } from '../../contexts/userContext.js';
 import { getFinancial, updateFinancial } from '../../services/financial.js';
 
-const getFinancialFromResponse = (data) => data?.financial || data?.financialDetails || data?.data || data;
+const getFinancialFromResponse = (data) => ({
+  ...(data?.financial || data?.financialDetails || data?.data || data),
+  totalMonthlyExpenses: data?.totalMonthlyExpenses,
+  availableAmount: data?.availableAmount,
+});
 
 const getErrorMessage = (error, fallback) => {
   const validationErrors = error?.response?.data?.errors;

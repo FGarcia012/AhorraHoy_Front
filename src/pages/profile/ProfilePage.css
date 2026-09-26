@@ -20,7 +20,7 @@
 .profile-field input { min-height: 44px; padding: .65rem .75rem; border: 1px solid #cbd8cc; background: #fff; color: #173b35; font: inherit; }
 .profile-field input[aria-invalid='true'] { border-color: #b75c43; }
 .profile-field-error { color: #a64f36; font-size: .73rem; font-weight: 500; }
-.profile-alert { margin-top: 1.5rem; padding: .9rem 1rem; background: #f8e1dc; color: #a64f36; }
+.profile-alert { display: flex; align-items: center; gap: .65rem; margin-top: 1.5rem; padding: .9rem 1rem; border-left: 4px solid #b75c43; background: #f8e1dc; color: #8f412f; line-height: 1.45; }
 .profile-danger { border-color: #e3c1b8; }
 .profile-danger h2 { color: #a64f36; }
 .profile-danger p { color: #71837b; font-size: .84rem; line-height: 1.5; }
