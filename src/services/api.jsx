@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3010/ahorraHoy
 
 export const apiClient = axios.create({
   baseURL: API_URL,
-  timeout: 10000,
+  timeout: 20000,
   httpsAgent: false, // Disable SSL verification
 });
 
