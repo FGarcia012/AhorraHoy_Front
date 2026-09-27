@@ -1,0 +1,4 @@
+.form-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.back-home-button { display: inline-flex; align-items: center; gap: .3rem; flex: 0 0 auto; padding: .2rem 0; border: 0; background: transparent; color: #71837b; cursor: pointer; font: inherit; font-size: .76rem; font-weight: 800; white-space: nowrap; }
+.back-home-button:hover { color: #bd633e; }
+@media (max-width: 520px) { .form-heading { flex-direction: column; gap: .65rem; } }

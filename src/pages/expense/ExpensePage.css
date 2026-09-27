@@ -1,0 +1,14 @@
+.expense-page { min-height: 100vh; background: #f5f7f2; color: #173b35; }
+.expense-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-bottom: 1.5rem; }
+.expense-summary-card { padding: 1rem; border: 1px solid #d8e1d7; background: #fffaf2; }
+.expense-summary-card span { display: block; color: #71837b; font-size: .78rem; }
+.expense-summary-card strong { display: block; margin-top: .35rem; font-family: Georgia, serif; font-size: 1.35rem; font-weight: 500; }
+.expense-summary-card-accent { background: #e8f0e8; }
+.expense-breakdown { display: grid; gap: .7rem; margin-top: 1.5rem; }
+.expense-breakdown-row { display: grid; grid-template-columns: minmax(120px, 1fr) minmax(80px, 2fr) auto; align-items: center; gap: .7rem; color: #28574e; font-size: .82rem; }
+.expense-breakdown-track { height: 9px; overflow: hidden; background: #d8e1d7; }
+.expense-breakdown-track span { display: block; height: 100%; background: #bd633e; }
+.expense-suggestion { margin-top: 1.5rem; padding: 1rem; border-left: 4px solid #e6a06d; background: #fff0d8; color: #28574e; line-height: 1.55; }
+.expense-suggestion strong { display: block; margin-bottom: .3rem; color: #173b35; }
+.expense-link { color: #23745f; font-weight: 800; text-decoration: none; }
+@media (max-width: 650px) { .expense-summary { grid-template-columns: 1fr; } .expense-breakdown-row { grid-template-columns: 1fr auto; }.expense-breakdown-track { grid-column: 1 / -1; grid-row: 2; } }

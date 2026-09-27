@@ -1,0 +1,35 @@
+import { AlertTriangle, ArrowLeft, BarChart3, CircleAlert, LoaderCircle, Target } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Navbar } from '../../components/navbar';
+import { Footer } from '../../components/footer/Footer';
+import { useStatistics } from '../../shared/hooks/useStatistics';
+import { useExpenseSummary } from '../../shared/hooks/useExpense.jsx';
+import { EXPENSE_CATEGORY } from '../../utils/enums.js';
+import './StatisticsPage.css';
+
+const currency = new Intl.NumberFormat('es-GT', { style: 'currency', currency: 'GTQ' });
+const hasValue = (value) => value !== undefined && value !== null && value !== '';
+
+export const StatisticsPage = () => {
+  const { statistics, isLoading, error, loadStatistics } = useStatistics();
+  const { summary: expenseSummary } = useExpenseSummary();
+
+  if (isLoading) return <main className='statistics-page'><Navbar /><section className='statistics-empty'><LoaderCircle className='spin' size={32} aria-hidden='true' /><p>Cargando tus estadísticas...</p></section><Footer /></main>;
+  if (error) return <main className='statistics-page'><Navbar /><section className='statistics-error'><CircleAlert size={32} aria-hidden='true' /><p>{error}</p><button className='goal-primary-button' type='button' onClick={loadStatistics}>Intentar de nuevo</button></section><Footer /></main>;
+  if (!statistics) return <main className='statistics-page'><Navbar /><section className='statistics-empty'><BarChart3 size={32} aria-hidden='true' /><p>Aún no hay estadísticas disponibles.</p></section><Footer /></main>;
+
+  const income = statistics.income || {};
+  const expenses = { ...(statistics.expenses || {}) };
+  const comparison = statistics.comparison || {};
+  const savings = statistics.savings || {};
+  const goal = statistics.goal || {};
+  const progressValue = Math.min(Math.max(Number(goal.progressPercentage) || 0, 0), 100);
+  const monthlyIncome = Number(income.totalMonthlyIncome) || 0;
+  const monthlyExpenses = Number(expenses.totalMonthlyExpenses) || 0;
+  const expensesExceedIncome = comparison.expensesExceedIncome === true || (monthlyIncome > 0 && monthlyExpenses >= monthlyIncome);
+  const warningMessage = comparison.warningMessage || 'Tus gastos mensuales igualan o superan tus ingresos. Revisa tus gastos antes de comprometer más dinero.';
+  const suggestedMonthlySaving = expenseSummary?.suggestedMonthlySaving ?? expenses.suggestedMonthlySaving ?? Math.max(Number(comparison.monthlyAvailableAmount) * 0.2, 0);
+  expenses.suggestedMonthlySaving = suggestedMonthlySaving;
+
+  return <main className='statistics-page'><Navbar /><section className='statistics-shell'><div className='statistics-topbar'><div><span className='goal-eyebrow'>Estadísticas</span><h1>Una mirada clara a tu avance.</h1><p className='statistics-intro'>Estos datos son calculados por tus ingresos, gastos y movimientos registrados.</p></div><Link className='goal-quiet-button' to='/goal'><ArrowLeft size={16} aria-hidden='true' /> Volver a mi meta</Link></div>{expensesExceedIncome && <div className='statistics-warning' role='alert'><AlertTriangle size={20} aria-hidden='true' /><div><strong>Atención: tus gastos están por encima de lo saludable</strong><span>{warningMessage}</span></div></div>}<section className='statistics-section'><div className='statistics-section-heading'><span className='goal-eyebrow'>Balance mensual</span><h2>Tu dinero disponible.</h2></div><div className='statistics-grid'><article className='statistics-card'><span>Ingresos mensuales</span><strong>{currency.format(monthlyIncome)}</strong></article><article className='statistics-card'><span>Gastos mensuales</span><strong>{currency.format(monthlyExpenses)}</strong></article><article className='statistics-card statistics-card-accent'><span>Disponible mensual</span><strong>{currency.format(Number(comparison.monthlyAvailableAmount) || 0)}</strong></article><article className='statistics-card'><span>Porcentaje destinado a gastos</span><strong>{Number(comparison.expensePercentageOfIncome) || (monthlyIncome ? ((monthlyExpenses / monthlyIncome) * 100).toFixed(2) : 0)}%</strong></article></div><div className='statistics-comparison' aria-label='Comparación de ingresos y gastos'><div><span>Ingresos</span><strong>{currency.format(monthlyIncome)}</strong></div><div><span>Gastos</span><strong>{currency.format(monthlyExpenses)}</strong></div></div></section><section className='statistics-section'><div className='statistics-section-heading'><span className='goal-eyebrow'>Ahorro recomendado</span><h2>Una cantidad posible para este mes.</h2></div><div className='statistics-suggestion'><div><span>Ahorro mensual sugerido</span><strong>{currency.format(Number(expenses.suggestedMonthlySaving) || 0)}</strong></div><p>Este monto se calcula con lo que queda disponible después de tus gastos.</p></div></section><section className='statistics-section'><div className='statistics-section-heading'><span className='goal-eyebrow'>Proyección</span><h2>Ingresos y ahorro acumulado.</h2></div><div className='statistics-grid'><article className='statistics-card'><span>Ingresos anuales</span><strong>{currency.format(Number(income.totalAnnualIncome) || 0)}</strong></article><article className='statistics-card'><span>Ingresos irregulares</span><strong>{currency.format(Number(income.irregularIncome) || 0)}</strong></article><article className='statistics-card'><span>Disponible anual</span><strong>{currency.format(Number(comparison.annualAvailableAmount) || 0)}</strong></article><article className='statistics-card statistics-card-accent'><span>Ahorro neto</span><strong>{currency.format(Number(savings.netSavings) || 0)}</strong></article></div></section><section className='statistics-section'><div className='statistics-section-heading'><span className='goal-eyebrow'>Gastos</span><h2>Distribución por categoría.</h2></div><div className='statistics-table-wrap'><table className='statistics-table'><thead><tr><th scope='col'>Categoría</th><th scope='col'>Monto mensual</th></tr></thead><tbody>{Object.entries(expenses.expensesByCategory || {}).map(([category, amount]) => <tr key={category}><td>{EXPENSE_CATEGORY[category]?.label || 'Otro'}</td><td>{currency.format(Number(amount) || 0)}</td></tr>)}</tbody></table></div></section><section className='statistics-section'><div className='statistics-section-heading'><span className='goal-eyebrow'>Meta activa</span><h2>Progreso actual.</h2></div><div className='statistics-progress'><Target size={24} aria-hidden='true' /><div className='statistics-progress-line' aria-label={`${Math.round(progressValue)}% de progreso`}><span style={{ width: `${progressValue}%` }} /></div><div className='statistics-progress-caption'><span>{Math.round(progressValue)}% completado</span><span>{hasValue(goal.remainingAmount) ? `${currency.format(Number(goal.remainingAmount))} restantes` : 'Sin meta activa'}</span></div></div></section></section><Footer /></main>;
+};
