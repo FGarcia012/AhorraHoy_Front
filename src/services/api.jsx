@@ -51,3 +51,7 @@ export const register = async (data) => {
 export const login = async (data) => {
     return await apiClient.post('/auth/login', data);
 };
+
+export const googleAuth = async (data) => {
+  return apiClient.post('/auth/google', data);
+};
