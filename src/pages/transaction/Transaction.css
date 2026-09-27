@@ -1,0 +1,26 @@
+.goal-transactions { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #d8e1d7; }
+.goal-transactions-state { display: flex; align-items: center; justify-content: center; gap: .65rem; min-height: 120px; color: #71837b; text-align: center; }
+.goal-transactions-error { flex-wrap: wrap; color: #a64f36; }
+.goal-transactions-table-wrap { overflow-x: auto; margin-top: 1rem; }
+.goal-transactions-table { width: 100%; min-width: 520px; border-collapse: collapse; background: #fffaf2; }
+.goal-transactions-table th, .goal-transactions-table td { padding: .9rem 1rem; border-bottom: 1px solid #d8e1d7; text-align: left; }
+.goal-transactions-table th { color: #71837b; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; }
+.goal-transactions-table td { color: #28574e; font-size: .88rem; }
+.goal-transaction-type { display: inline-flex; padding: .3rem .55rem; background: #e8f0e8; color: #23745f; font-size: .75rem; font-weight: 800; }
+.goal-transaction-withdraw { background: #f8e1dc; color: #a64f36; }
+.goal-transaction-amount { font-weight: 800; }
+.transaction-filters { display: flex; align-items: end; gap: 1rem; margin-top: 2rem; }
+.transaction-filters .goal-search { margin-top: 0; flex: 1; }
+.transaction-date-filter { display: flex; flex-direction: column; gap: .4rem; color: #71837b; font-size: .78rem; font-weight: 800; }
+.transaction-date-filter input { min-height: 44px; padding: .65rem .75rem; border: 1px solid #cbd8cc; background: #fffaf2; color: #173b35; font: inherit; }
+@media (max-width: 600px) { .transaction-filters { align-items: stretch; flex-direction: column; } }
+.goal-transactions-table a { color: #23745f; font-weight: 800; }
+.transaction-detail { max-width: 680px; margin: 2rem auto 0; padding: 2rem; border: 1px solid #d8e1d7; background: #fffaf2; }
+.transaction-detail-heading { display: flex; align-items: flex-start; gap: .8rem; color: #23745f; }
+.transaction-detail-heading h2 { margin: .7rem 0 0; color: #173b35; font-family: Georgia, serif; font-size: 1.8rem; font-weight: 500; }
+.transaction-detail-list { margin: 2rem 0 0; }
+.transaction-detail-list div { display: grid; grid-template-columns: minmax(120px, .45fr) 1fr; gap: 1rem; padding: .9rem 0; border-top: 1px solid #d8e1d7; }
+.transaction-detail-list dt { color: #71837b; font-size: .78rem; font-weight: 800; text-transform: uppercase; }
+.transaction-detail-list dd { margin: 0; color: #28574e; }
+.transaction-detail-list div:first-child dd { font-size: 1.25rem; font-weight: 800; }
+@media (max-width: 600px) { .transaction-detail { padding: 1.25rem; } .transaction-detail-list div { grid-template-columns: 1fr; gap: .35rem; } }
