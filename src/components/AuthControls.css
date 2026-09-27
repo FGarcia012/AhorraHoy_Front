@@ -2,3 +2,6 @@
 .back-home-button { display: inline-flex; align-items: center; gap: .3rem; flex: 0 0 auto; padding: .2rem 0; border: 0; background: transparent; color: #71837b; cursor: pointer; font: inherit; font-size: .76rem; font-weight: 800; white-space: nowrap; }
 .back-home-button:hover { color: #bd633e; }
 @media (max-width: 520px) { .form-heading { flex-direction: column; gap: .65rem; } }
+.auth-divider { display: flex; align-items: center; gap: .6rem; margin: .5rem 0; color: #9aa79f; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; }
+.auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: #e2e8e4; }
+.google-auth-wrapper { display: flex; flex-direction: column; gap: .5rem; }

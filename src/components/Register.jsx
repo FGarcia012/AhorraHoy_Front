@@ -4,6 +4,7 @@ import { ArrowLeft, ImagePlus, LoaderCircle, UserRound, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../shared/hooks/useRegister';
 import { validateEmail, validateEmailMessage, validateName, validateNameMessage, validatePassword, validatePasswordMessage, validateSurname, validateSurnameMessage } from '../shared/validators';
+import { GoogleAuthButton } from './GoogleAuthButton';
 import './AuthControls.css';
 
 const initialFormState = {
@@ -60,6 +61,7 @@ export const Register = ({ switchAuthHandler }) => {
           <label className='field-label'>Contraseña<input type='password' value={formState.password.value} onChange={(event) => updateField('password', event.target.value)} onBlur={() => handleBlur('password')} aria-invalid={formState.password.showError} autoComplete='new-password' />{formState.password.showError && <span className='field-error'>{messages.password}</span>}</label>
           <div className='upload-row'><div className='avatar-preview'>{previewImage ? <img src={previewImage} alt='Vista previa de perfil' /> : <UserRound size={24} aria-hidden='true' />}</div><div><strong>Foto de perfil <span>(opcional)</span></strong><p>JPG o PNG, máximo 5 MB.</p><button className='upload-button' type='button' onClick={() => fileInputRef.current?.click()}><ImagePlus size={16} aria-hidden='true' /> Elegir imagen</button><input ref={fileInputRef} className='visually-hidden' type='file' accept='image/jpeg,image/png' onChange={handleFileChange} />{previewImage && <button className='remove-image' type='button' onClick={removeImage}><X size={15} aria-hidden='true' /> Quitar</button>}{formState.profilePicture.showError && <span className='field-error'>Selecciona una imagen válida de máximo 5 MB.</span>}</div></div>
           <button className='submit-button' type='submit' disabled={isLoading}>{isLoading ? <><LoaderCircle className='spin' size={18} aria-hidden='true' /> Creando cuenta...</> : 'Crear mi cuenta'}</button>
+          <GoogleAuthButton />
           <p className='auth-switch'>¿Ya tienes una cuenta? <button type='button' onClick={switchAuthHandler}>Inicia sesión</button></p>
         </form>
       </section>

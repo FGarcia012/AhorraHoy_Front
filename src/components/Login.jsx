@@ -4,6 +4,7 @@ import { ArrowLeft, LoaderCircle, LogIn } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../shared/hooks/useLogin';
 import { validateEmail } from '../shared/validators';
+import { GoogleAuthButton } from './GoogleAuthButton';
 import './AuthControls.css';
 
 export const Login = ({ switchAuthHandler }) => {
@@ -30,6 +31,7 @@ export const Login = ({ switchAuthHandler }) => {
           <label className='field-label'>Correo electrónico<input type='email' value={email} onChange={(event) => { setEmail(event.target.value); setFieldErrors((previous) => ({ ...previous, email: false })); }} autoComplete='email' aria-invalid={fieldErrors.email} />{fieldErrors.email && <span className='field-error'>Ingresa un correo válido.</span>}</label>
           <label className='field-label'>Contraseña<input type='password' value={password} onChange={(event) => { setPassword(event.target.value); setFieldErrors((previous) => ({ ...previous, password: false })); }} autoComplete='current-password' aria-invalid={fieldErrors.password} />{fieldErrors.password && <span className='field-error'>Ingresa tu contraseña.</span>}</label>
           <button className='submit-button' type='submit' disabled={isLoading}>{isLoading ? <><LoaderCircle className='spin' size={18} aria-hidden='true' /> Iniciando sesión...</> : 'Iniciar sesión'}</button>
+          <GoogleAuthButton />
           <p className='auth-switch'>¿Todavía no tienes una cuenta? <button type='button' onClick={switchAuthHandler}>Regístrate</button></p>
         </form>
       </section>
